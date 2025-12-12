@@ -4,890 +4,515 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cozy Southern Christmas — Holiday Preorders</title>
-
-  <!-- Fonts (using brand choices where available) -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
-
   <style>
     :root{
-      --bg: #F4F3ED;          /* bone white */
-      --near-black: #1A1A1B;
-      --deep-plum: #4B3F4E;
-      --smoky-lav: #8D83A8;
-      --soft-taupe: #D5CBBF;
-      --accent: #8B1E3F;      /* cranberry-ish accent for holiday */
-      --gold: #C9A84B;
-      --card: #ffffff;
-      --muted: #6c6c6c;
-      --radius: 14px;
-      font-family: "Raleway", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      --bg:#F4F3ED;--near-black:#1A1A1B;--deep-plum:#4B3F4E;--muted:#6c6c6c;--card:#fff;
+      font-family:"Raleway",system-ui,-apple-system,"Segoe UI",Roboto,Arial;
     }
-
-    html,body{height:100%;margin:0;background:linear-gradient(#fbfbfa,#f4f3ed);color:var(--near-black);-webkit-font-smoothing:antialiased;}
-    .container{max-width:1100px;margin:28px auto;padding:28px;}
-    header.hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-bottom:22px;}
-    .hero-left h1{font-family:"Cinzel Decorative",serif;font-size:40px;margin:0;color:var(--deep-plum);}
-    .hero-left p{margin:10px 0 18px;color:var(--muted);line-height:1.5;}
-    .cta-row{display:flex;gap:12px;align-items:center;}
-    .btn{background:var(--deep-plum);color:white;padding:12px 18px;border-radius:10px;border:0;cursor:pointer;font-weight:600;}
-    .btn.secondary{background:transparent;border:2px solid var(--deep-plum);color:var(--deep-plum);}
-    .hero-right{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(27,24,24,0.06)}
-    .small-note{font-size:13px;color:var(--muted)}
-
-    /* layout cards */
-    .section{margin:18px 0;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(245,243,240,0.9));border-radius:12px;box-shadow:0 6px 12px rgba(20,20,20,0.03)}
-    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .card{background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(0,0,0,0.04)}
-    .card h3{margin:6px 0 8px;font-size:18px;color:var(--deep-plum)}
-    .muted{color:var(--muted);font-size:14px}
-
-    /* product rows */
-    .product-row{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #eee}
+    html,body{margin:0;background:linear-gradient(#fbfbfa,#f4f3ed);color:var(--near-black);-webkit-font-smoothing:antialiased;}
+    .container{max-width:1100px;margin:28px auto;padding:24px;}
+    header.hero{display:grid;grid-template-columns:1fr 360px;gap:22px;align-items:center;margin-bottom:20px;}
+    .hero-left h1{font-family:"Cinzel Decorative",serif;font-size:36px;margin:0;color:var(--deep-plum)}
+    .cta-row{display:flex;gap:10px;margin-top:10px}
+    .btn{background:var(--deep-plum);color:#fff;border-radius:10px;padding:10px 14px;border:0;cursor:pointer;font-weight:700}
+    .btn.secondary{background:transparent;color:var(--deep-plum);border:2px solid var(--deep-plum)}
+    .section{background:linear-gradient(white,#fbfbfa);padding:14px;border-radius:12px;margin-bottom:16px;box-shadow:0 6px 14px rgba(20,20,20,0.03)}
+    .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.04)}
+    .product-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed #eee}
     .product-left{display:flex;gap:12px;align-items:center}
-    .thumb{width:76px;height:56px;background:linear-gradient(#eee,#ddd);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px}
-    .prod-title{font-weight:600}
+    .thumb{width:72px;height:52px;background:linear-gradient(#eee,#ddd);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px}
+    .prod-title{font-weight:700}
     .price{font-weight:700;color:var(--deep-plum)}
-    /* qty controls */
-    .qty{display:flex;align-items:center;border-radius:10px;border:1px solid #e2e0dd;padding:4px;background:#fff}
-    .qty button{background:transparent;border:0;padding:8px 12px;font-weight:700;cursor:pointer;color:var(--deep-plum)}
-    .qty input{width:40px;border:0;text-align:center;font-weight:600;font-size:15px}
-
-    /* summary */
-    .summary{position:sticky;top:14px;background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 8px 30px rgba(35,30,30,0.05)}
-    .summary h4{margin:0 0 8px}
-    .line{display:flex;justify-content:space-between;padding:6px 0;color:var(--muted)}
-    .total{display:flex;justify-content:space-between;font-size:18px;font-weight:700;padding-top:12px;border-top:1px dashed #eee;margin-top:8px}
-    .small{font-size:13px;color:var(--muted);margin-top:8px}
-
-    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:14px}
-
-    /* responsive */
-    @media (max-width:980px){
-      header.hero{grid-template-columns:1fr;gap:12px}
-      .grid-2{grid-template-columns:1fr}
-      .grid-3{grid-template-columns:1fr}
-      .hero-right{order: -1}
-      .summary{position:static;margin-top:12px}
-    }
+    .qty{display:flex;align-items:center;border-radius:10px;border:1px solid #e6e4e1;padding:4px;background:#fff}
+    .qty button{background:transparent;border:0;padding:8px 10px;font-weight:700;color:var(--deep-plum);cursor:pointer}
+    .qty input{width:48px;text-align:center;border:0;font-weight:700}
+    .summary{position:sticky;top:14px;background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(0,0,0,0.04);box-shadow:0 10px 28px rgba(30,30,30,0.04)}
+    .muted{color:var(--muted);font-size:14px}
+    label{cursor:pointer}
+    @media (max-width:980px){header.hero{grid-template-columns:1fr;gap:12px}.grid-2{grid-template-columns:1fr}.summary{position:static;margin-top:12px}}
   </style>
 </head>
 <body>
   <div class="container">
-
-    <!-- HERO -->
     <header class="hero">
       <div class="hero-left">
         <h1>Cozy Southern Christmas</h1>
-        <p>Make Christmas Day simple, cozy, and delicious. Fresh Southern breakfasts, a midday grazing box, and two holiday dinners (Ham or our signature Gumbo), plus pies — all made from scratch in a home kitchen. Preorders close Dec 19 • Pickup Dec 24 (Joplin, MO).</p>
-        <div class="cta-row">
-          <button class="btn" id="jump-order">Order Now</button>
-          <button class="btn secondary" id="download-menu">Download Menu</button>
-        </div>
-        <p class="small-note" style="margin-top:12px">Everything available à la carte. Bundles are fixed but you may <strong>add</strong> extras at 10% off per our add-on rule.</p>
+        <p class="muted">Make Christmas Day simple and delicious. Preorders close Dec 19 • Pickup Dec 24 (S. Wall Ave, Joplin).</p>
+        <div class="cta-row"><button class="btn" id="jump-order">Order Now</button><button class="btn secondary" id="download-menu">Download Menu</button></div>
+        <p class="muted" style="margin-top:10px">Choose a bundle up top, or scroll down to order à la carte. Bundles are fixed; extras may be added at 10% off.</p>
       </div>
 
-      <aside class="hero-right">
-        <div style="font-size:16px;font-weight:700;color:var(--deep-plum)">Preorder Highlights</div>
-        <ul style="padding-left:18px;margin-top:8px;color:var(--muted)">
-          <li>Ham Bundle — $120 (feeds a family)</li>
-          <li>Gumbo Bundle — $125 (signature dish)</li>
-          <li>Breakfasts feed 6–8 • Dinners feed 4</li>
-          <li>Preorders close Dec 19 • Pickup Dec 24</li>
+      <aside class="card">
+        <div style="font-weight:700;color:var(--deep-plum)">Quick Info</div>
+        <ul class="muted" style="padding-left:18px;margin-top:8px">
+          <li>Ham Bundle — $120 (feeds multiple)</li>
+          <li>Gumbo Bundle — $125 (signature)</li>
+          <li>Breakfasts & pies: feed 6–8 • Dinners: feed ~4</li>
         </ul>
       </aside>
     </header>
 
-    <!-- HOW IT WORKS -->
-    <section class="section" id="how-it-works">
-      <div style="display:flex;gap:12px;align-items:start;flex-wrap:wrap">
-        <div style="flex:1;min-width:200px">
-          <h3 style="margin:0 0 6px">Pick Your Meal</h3>
-          <p class="muted">Choose breakfast, grazing box, dinner, and a pie — or pick a bundle for an easy holiday table.</p>
+    <!-- NEW: Bundle chooser (top) -->
+    <section class="section card" id="bundle-chooser">
+      <h3 style="margin-top:0;color:var(--deep-plum);font-family:'Cinzel Decorative',serif">Choose a bundle — or scroll for à la carte</h3>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="bundle" value="none" checked> No bundle</label>
+
+        <label style="display:flex;align-items:center;gap:8px">
+          <input type="radio" name="bundle" value="ham"> Ham Bundle — <strong>$120</strong>
+        </label>
+
+        <label style="display:flex;align-items:center;gap:8px">
+          <input type="radio" name="bundle" value="gumbo"> Gumbo Bundle — <strong>$125</strong>
+        </label>
+
+        <div style="margin-left:6px;display:flex;align-items:center;gap:8px">
+          <div class="muted">Quantity</div>
+          <!-- hidden-ish qty inputs used by pricing logic; they match data-key the recalc expects -->
+          <div class="qty"><button class="dec" data-bundle-qty>-</button><input data-key="bundle-ham" id="bundle-ham-qty" class="qty-input" type="number" min="0" value="0" data-price="120"><button class="inc" data-bundle-qty>+</button></div>
         </div>
-        <div style="flex:1;min-width:200px">
-          <h3 style="margin:0 0 6px">Submit & Pay</h3>
-          <p class="muted">Fill out the order on this page. After you submit, please send payment via Venmo / PayPal / Square. Payment holds your order.</p>
-        </div>
-        <div style="flex:1;min-width:200px">
-          <h3 style="margin:0 0 6px">Pickup</h3>
-          <p class="muted">Pickup on Dec 24 • 12–5pm near S. Wall Ave. Delivery limited inside Joplin for $10 (5–7pm).</p>
-        </div>
+
+        <!-- We'll store gumbo qty in separate input but same visible control (sync below) -->
+        <input data-key="bundle-gumbo" id="bundle-gumbo-qty" class="qty-input" type="number" min="0" value="0" data-price="125" style="display:none">
+      </div>
+
+      <div style="margin-top:12px" class="muted">
+        After selecting a bundle and quantity, scroll down to pick the included breakfast choice and pie for your bundle(s). The order cannot be completed until each bundle has a breakfast and a pie selection.
+      </div>
+
+      <div style="margin-top:12px">
+        <div id="bundle-warning" style="color:#8B1E3F;font-weight:700;display:none">Please choose breakfast & pie for each selected bundle before submitting.</div>
       </div>
     </section>
 
-    <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start">
-      <!-- LEFT: Menu -->
+    <!-- Main ordering area -->
+    <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start">
       <main>
 
-        <!-- Intro -->
-        <section class="section">
-          <p style="margin:0;color:var(--muted)">Christmas should be warm and easy — not hectic. Let us handle the cooking so you can gather, rest, and enjoy. Everything is available à la carte or in one of our bundles (bundles are fixed; extras may be added).</p>
+        <!-- BUNDLES DETAIL (choices for bundle contents) -->
+        <section class="section" id="bundle-choices">
+          <h3 style="margin-top:0;color:var(--deep-plum);font-family:'Cinzel Decorative',serif">Bundle selections (if you picked a bundle)</h3>
+          <div class="card" style="margin-bottom:12px">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+              <div style="flex:1;min-width:220px">
+                <div class="muted">Ham Bundle — Breakfast choice</div>
+                <select id="bundle-ham-breakfast" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3">
+                  <option value="">Choose breakfast</option>
+                  <option value="classic-rolls">Classic Cinnamon Rolls</option>
+                  <option value="sticky-rolls">Caramel Sticky Rolls</option>
+                  <option value="french-toast">French Toast Casserole</option>
+                </select>
+              </div>
+              <div style="flex:1;min-width:220px">
+                <div class="muted">Ham Bundle — Pie choice</div>
+                <select id="bundle-ham-pie" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3">
+                  <option value="">Choose pie</option>
+                  <option value="pie-lemon">Lemon Buttermilk</option>
+                  <option value="pie-sweetpot">Maple Sweet Potato</option>
+                  <option value="pie-apple">Apple Crumble</option>
+                  <option value="pie-pecan">Brown Butter Pecan</option>
+                  <option value="pie-midnight">Midnight Chocolate Pecan</option>
+                </select>
+              </div>
+            </div>
+
+            <hr style="margin:12px 0">
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+              <div style="flex:1;min-width:220px">
+                <div class="muted">Gumbo Bundle — Breakfast choice</div>
+                <select id="bundle-gumbo-breakfast" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3">
+                  <option value="">Choose breakfast</option>
+                  <option value="classic-rolls">Classic Cinnamon Rolls</option>
+                  <option value="sticky-rolls">Caramel Sticky Rolls</option>
+                  <option value="french-toast">French Toast Casserole</option>
+                </select>
+              </div>
+              <div style="flex:1;min-width:220px">
+                <div class="muted">Gumbo Bundle — Pie choice</div>
+                <select id="bundle-gumbo-pie" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3">
+                  <option value="">Choose pie</option>
+                  <option value="pie-lemon">Lemon Buttermilk</option>
+                  <option value="pie-sweetpot">Maple Sweet Potato</option>
+                  <option value="pie-apple">Apple Crumble</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <!-- Breakfast -->
-        <section class="section" id="breakfast">
-          <h2 style="margin-top:0;color:var(--deep-plum);font-family:'Cinzel Decorative',serif">Christmas Morning Breakfast</h2>
-          <p class="muted">Choose one for the bundle. All breakfast items feed <strong>6–8</strong>.</p>
+        <!-- ALA CARTE SECTIONS (Breakfast, Midday, Dinner, Desserts) -->
+        <section class="section" id="menu">
+          <h2 style="font-family:'Cinzel Decorative',serif;color:var(--deep-plum);margin-top:0">Order à la carte</h2>
 
-          <div class="card" style="margin-top:10px">
-            <!-- Classic Cinnamon Rolls -->
-            <div class="product-row" data-key="classic-rolls" data-price-baked="30" data-price-bakehome="28">
-              <div class="product-left">
-                <div class="thumb">Rolls</div>
-                <div>
-                  <div class="prod-title">Classic Cinnamon Roll Tin</div>
-                  <div class="muted">Bake-at-home or fully baked. Feeds 6–8.</div>
-                </div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end">
-                <div class="price">$30</div>
-                <div style="margin-top:8px">
-                  <div class="qty">
-                    <button class="dec" aria-label="decrease">−</button>
-                    <input type="number" min="0" value="0" class="qty-input" data-variant="baked">
-                    <button class="inc" aria-label="increase">+</button>
-                  </div>
-                </div>
-                <div class="muted" style="font-size:12px;margin-top:6px">Bake-at-home: $28 (select variant below)</div>
-                <div style="margin-top:6px">
-                  <label style="font-size:13px;color:var(--muted)"><input type="radio" name="classic_variant" value="baked" checked> Baked ($30)</label>
-                  &nbsp;&nbsp;
-                  <label style="font-size:13px;color:var(--muted)"><input type="radio" name="classic_variant" value="bakehome"> Bake-at-home ($28)</label>
-                </div>
-              </div>
+          <!-- Breakfast -->
+          <h3>Breakfast (feeds 6–8)</h3>
+          <div class="card" style="margin-bottom:12px">
+            <div class="product-row" data-key="classic-rolls" data-price="30">
+              <div class="product-left"><div class="thumb">Rolls</div><div><div class="prod-title">Classic Cinnamon Roll Tin</div><div class="muted">Baked: $30 · Bake-at-home: $28</div></div></div>
+              <div><div class="price">$30</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input data-key="classic-rolls" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div>
             </div>
 
-            <!-- Caramel Sticky Rolls -->
-            <div class="product-row" data-key="sticky-rolls" data-price-baked="36" data-price-bakehome="34">
-              <div class="product-left">
-                <div class="thumb">Sticky</div>
-                <div>
-                  <div class="prod-title">Caramel Pecan Sticky Roll Tin (Premium)</div>
-                  <div class="muted">Gooey caramel & toasted pecans. Feeds 6–8.</div>
-                </div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end">
-                <div class="price">$36</div>
-                <div style="margin-top:8px">
-                  <div class="qty">
-                    <button class="dec" aria-label="decrease">−</button>
-                    <input type="number" min="0" value="0" class="qty-input" data-variant="baked">
-                    <button class="inc" aria-label="increase">+</button>
-                  </div>
-                </div>
-                <div class="muted" style="font-size:12px;margin-top:6px">Bake-at-home: $34</div>
-                <div style="margin-top:6px">
-                  <label style="font-size:13px;color:var(--muted)"><input type="radio" name="sticky_variant" value="baked" checked> Baked ($36)</label>
-                  &nbsp;&nbsp;
-                  <label style="font-size:13px;color:var(--muted)"><input type="radio" name="sticky_variant" value="bakehome"> Bake-at-home ($34)</label>
-                </div>
-              </div>
+            <div class="product-row" data-key="sticky-rolls" data-price="36">
+              <div class="product-left"><div class="thumb">Sticky</div><div><div class="prod-title">Caramel Pecan Sticky Roll Tin</div><div class="muted">Baked: $36 · Bake-at-home: $34</div></div></div>
+              <div><div class="price">$36</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input data-key="sticky-rolls" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div>
             </div>
 
-            <!-- French Toast -->
             <div class="product-row" data-key="french-toast" data-price="30">
-              <div class="product-left">
-                <div class="thumb">FT</div>
-                <div>
-                  <div class="prod-title">French Toast Casserole</div>
-                  <div class="muted">Vanilla-cinnamon custard & brown sugar crumble. Feeds 6–8.</div>
-                </div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end">
-                <div class="price">$30</div>
-                <div style="margin-top:8px">
-                  <div class="qty">
-                    <button class="dec" aria-label="decrease">−</button>
-                    <input type="number" min="0" value="0" class="qty-input">
-                    <button class="inc" aria-label="increase">+</button>
-                  </div>
-                </div>
-              </div>
+              <div class="product-left"><div class="thumb">FT</div><div><div class="prod-title">French Toast Casserole</div><div class="muted">Vanilla-cinnamon custard & crumble.</div></div></div>
+              <div><div class="price">$30</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input data-key="french-toast" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div>
             </div>
-
-            <!-- Sausage bake -->
-            <div class="product-row" data-key="sausage-bake" data-price="28">
-              <div class="product-left">
-                <div class="thumb">Bake</div>
-                <div>
-                  <div class="prod-title">Sausage, Egg & Hashbrown Breakfast Bake</div>
-                  <div class="muted">Hearty Southern casserole. Feeds 6–8.</div>
-                </div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end">
-                <div class="price">$28</div>
-                <div style="margin-top:8px">
-                  <div class="qty">
-                    <button class="dec" aria-label="decrease">−</button>
-                    <input type="number" min="0" value="0" class="qty-input">
-                    <button class="inc" aria-label="increase">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Fruit Tray -->
-            <div class="product-row" data-key="fruit-tray" data-price="18">
-              <div class="product-left">
-                <div class="thumb">Fruit</div>
-                <div>
-                  <div class="prod-title">Fresh Fruit Tray (optional)</div>
-                  <div class="muted">Seasonal sliced fruit. Feeds 6–8.</div>
-                </div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end">
-                <div class="price">$18</div>
-                <div style="margin-top:8px">
-                  <div class="qty">
-                    <button class="dec" aria-label="decrease">−</button>
-                    <input type="number" min="0" value="0" class="qty-input">
-                    <button class="inc" aria-label="increase">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
-        </section>
 
-        <!-- Snack box -->
-        <section class="section" id="snack">
-          <h2 style="color:var(--deep-plum);font-family:'Cinzel Decorative',serif">Midday Snack Box</h2>
-          <p class="muted">Included in bundles. Available à la carte ($35).</p>
-          <div class="card">
+          <!-- Midday Snack -->
+          <h3>Midday Snack</h3>
+          <div class="card" style="margin-bottom:12px">
             <div class="product-row" data-key="grazing-box" data-price="35">
-              <div class="product-left">
-                <div class="thumb">Box</div>
-                <div>
-                  <div class="prod-title">Southern Grazing Box</div>
-                  <div class="muted">Sausage, cheeses, crackers, fruit, & a small seasonal sweet. Feeds 3–4.</div>
-                </div>
-              </div>
-              <div style="display:flex;flex-direction:column;align-items:flex-end">
-                <div class="price">$35</div>
-                <div style="margin-top:8px">
-                  <div class="qty">
-                    <button class="dec">−</button>
-                    <input type="number" min="0" value="0" class="qty-input">
-                    <button class="inc">+</button>
-                  </div>
-                </div>
-              </div>
+              <div class="product-left"><div class="thumb">Box</div><div><div class="prod-title">Southern Grazing Box</div><div class="muted">Cheeses, meats, fruit & a small sweet.</div></div></div>
+              <div><div class="price">$35</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input data-key="grazing-box" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div>
             </div>
           </div>
-        </section>
 
-        <!-- Dinners -->
-        <section class="section" id="dinner">
-          <h2 style="color:var(--deep-plum);font-family:'Cinzel Decorative',serif">Christmas Dinners</h2>
-          <p class="muted">Each dinner feeds 4. Choose one for the bundle or order à la carte.</p>
+          <!-- Dinners -->
+          <h3>Dinners (each feeds ~4)</h3>
+          <div class="grid-2" style="margin-bottom:12px">
+            <div class="card" data-key="ham" data-price="40">
+              <h4 style="margin:0 0 8px">Brown Sugar Glazed Ham Dinner — <span class="price">$40</span></h4>
+              <div class="muted">Includes ham & rolls.</div>
+              <div style="margin-top:10px"><div class="qty"><button class="dec">−</button><input data-key="ham" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div>
+            </div>
 
-          <div class="grid-2" style="margin-top:12px">
-            <!-- Ham -->
-            <div class="card">
-              <h3>Brown Sugar Glazed Ham Dinner — <span class="price">$40</span></h3>
-              <div class="muted">Includes ham & rolls. Choose <strong>two</strong> sides when ordering a ham dinner.</div>
-              <div style="margin-top:10px">
-                <div class="qty" style="display:inline-flex;align-items:center">
-                  <button class="dec">−</button>
-                  <input type="number" min="0" value="0" class="qty-input" data-key="ham">
-                  <button class="inc">+</button>
-                </div>
-              </div>
-
-<div style="margin-top:10px">
-  <div class="muted">Choose two sides per ham dinner (each side = $10). Add quantities below.</div>
-
-  <!-- Side product rows (each is a normal product row integrated with the form) -->
-  <div class="product-row" data-key="side-mac" data-price="10" style="margin-top:8px">
-    <div class="product-left">
-      <div class="thumb">Side</div>
-      <div>
-        <div class="prod-title">Mac & Cheese</div>
-        <div class="muted">Creamy baked mac & cheese. $10 / pan</div>
-      </div>
-    </div>
-    <div>
-      <div class="price">$10</div>
-      <div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div>
-    </div>
-  </div>
-
-  <div class="product-row" data-key="side-mashed" data-price="10" style="margin-top:8px">
-    <div class="product-left">
-      <div class="thumb">Side</div>
-      <div>
-        <div class="prod-title">Mashed Potatoes</div>
-        <div class="muted">Buttery whipped potatoes. $10 / pan</div>
-      </div>
-    </div>
-    <div>
-      <div class="price">$10</div>
-      <div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div>
-    </div>
-  </div>
-
-  <div class="product-row" data-key="side-greenbeans" data-price="10" style="margin-top:8px">
-    <div class="product-left">
-      <div class="thumb">Side</div>
-      <div>
-        <div class="prod-title">Green Bean Casserole</div>
-        <div class="muted">Classic green bean casserole. $10 / pan</div>
-      </div>
-    </div>
-    <div>
-      <div class="price">$10</div>
-      <div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div>
-    </div>
-  </div>
-
-  <div class="product-row" data-key="side-corn" data-price="10" style="margin-top:8px">
-    <div class="product-left">
-      <div class="thumb">Side</div>
-      <div>
-        <div class="prod-title">Sweet Cream Fiesta Corn</div>
-        <div class="muted">Creamy fiesta-style corn. $10 / pan</div>
-      </div>
-    </div>
-    <div>
-      <div class="price">$10</div>
-      <div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div>
-    </div>
-  </div>
-
-</div>
-
-
-            <!-- Gumbo -->
-            <div class="card">
-              <h3>Signature Holiday Gumbo Dinner — <span class="price">$45</span></h3>
-              <div class="muted">Served with rice, cornbread, and Southern potato salad. Family-style. Feeds 4.</div>
-              <div style="margin-top:10px">
-                <div class="qty" style="display:inline-flex;align-items:center">
-                  <button class="dec">−</button>
-                  <input type="number" min="0" value="0" class="qty-input" data-key="gumbo">
-                  <button class="inc">+</button>
-                </div>
-              </div>
+            <div class="card" data-key="gumbo" data-price="45">
+              <h4 style="margin:0 0 8px">Signature Holiday Gumbo Dinner — <span class="price">$45</span></h4>
+              <div class="muted">Served with rice, cornbread & potato salad.</div>
+              <div style="margin-top:10px"><div class="qty"><button class="dec">−</button><input data-key="gumbo" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div>
 
               <div style="margin-top:10px">
                 <div class="muted">Add-on: Deviled Eggs</div>
-                <div style="display:flex;gap:8px;margin-top:8px">
-                  <div style="display:flex;align-items:center">
-                    <label style="margin-right:8px">½ dozen</label>
-                    <div class="qty" style="display:inline-flex;align-items:center">
-                      <button class="dec">−</button>
-                      <input type="number" min="0" value="0" class="qty-input" data-key="deviled-hf" data-price="6">
-                      <button class="inc">+</button>
-                    </div>
-                  </div>
-                  <div style="display:flex;align-items:center">
-                    <label style="margin-right:8px">Dozen</label>
-                    <div class="qty" style="display:inline-flex;align-items:center">
-                      <button class="dec">−</button>
-                      <input type="number" min="0" value="0" class="qty-input" data-key="deviled-doz" data-price="10">
-                      <button class="inc">+</button>
-                    </div>
-                  </div>
+                <div style="display:flex;gap:10px;margin-top:8px">
+                  <div><div style="font-size:13px" class="muted">½ dozen</div><div class="qty" style="margin-top:6px"><button class="dec">−</button><input data-key="deviled-hf" class="qty-input" data-price="6" type="number" min="0" value="0"><button class="inc">+</button></div></div>
+                  <div><div style="font-size:13px" class="muted">Dozen</div><div class="qty" style="margin-top:6px"><button class="dec">−</button><input data-key="deviled-doz" class="qty-input" data-price="10" type="number" min="0" value="0"><button class="inc">+</button></div></div>
                 </div>
               </div>
-
             </div>
           </div>
-        </section>
 
-        <!-- Pies -->
-        <section class="section" id="pies">
-          <h2 style="color:var(--deep-plum);font-family:'Cinzel Decorative',serif">Holiday Pies</h2>
-          <p class="muted">Choose as part of a bundle or buy à la carte.</p>
-          <div class="card" style="margin-top:10px">
-            <div class="product-row" data-key="pie-lemon" data-price="26">
-              <div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Lemon Buttermilk</div><div class="muted">Bright & old-fashioned.</div></div></div>
-              <div><div class="price">$26</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div></div>
-            </div>
-            <div class="product-row" data-key="pie-sweetpot" data-price="28">
-              <div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Maple Sweet Potato</div><div class="muted">Velvety & spiced.</div></div></div>
-              <div><div class="price">$28</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div></div>
-            </div>
-            <div class="product-row" data-key="pie-apple" data-price="30">
-              <div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Apple Crumble</div><div class="muted">Brown sugar & spice crumble.</div></div></div>
-              <div><div class="price">$30</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div></div>
-            </div>
-            <div class="product-row" data-key="pie-pecan" data-price="36">
-              <div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Brown Butter Bourbon Pecan</div><div class="muted">Rich & Southern.</div></div></div>
-              <div><div class="price">$36</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div></div>
-            </div>
-            <div class="product-row" data-key="pie-midnight" data-price="38">
-              <div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Midnight Chocolate Pecan</div><div class="muted">Decadent chocolate & pecans.</div></div></div>
-              <div><div class="price">$38</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div></div>
-            </div>
+          <!-- Sides -->
+          <h3>Sides (each $10)</h3>
+          <div class="card" style="margin-bottom:12px">
+            <div class="product-row" data-key="side-mac" data-price="10"><div class="product-left"><div class="thumb">Side</div><div><div class="prod-title">Mac & Cheese</div></div></div><div><div class="price">$10</div><div class="qty"><button class="dec">−</button><input data-key="side-mac" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div></div>
+            <div class="product-row" data-key="side-mashed" data-price="10"><div class="product-left"><div class="thumb">Side</div><div><div class="prod-title">Mashed Potatoes</div></div></div><div><div class="price">$10</div><div class="qty"><button class="dec">−</button><input data-key="side-mashed" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div></div>
+            <div class="product-row" data-key="side-greenbeans" data-price="10"><div class="product-left"><div class="thumb">Side</div><div><div class="prod-title">Green Bean Casserole</div></div></div><div><div class="price">$10</div><div class="qty"><button class="dec">−</button><input data-key="side-greenbeans" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div></div>
+            <div class="product-row" data-key="side-corn" data-price="10"><div class="product-left"><div class="thumb">Side</div><div><div class="prod-title">Sweet Cream Fiesta Corn</div></div></div><div><div class="price">$10</div><div class="qty"><button class="dec">−</button><input data-key="side-corn" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div></div>
+          </div>
+
+          <!-- Desserts / Pies -->
+          <h3>Desserts</h3>
+          <div class="card" style="margin-bottom:12px">
+            <div class="product-row" data-key="pie-lemon" data-price="26"><div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Lemon Buttermilk</div></div></div><div><div class="price">$26</div><div class="qty"><button class="dec">−</button><input data-key="pie-lemon" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div></div>
+            <div class="product-row" data-key="pie-sweetpot" data-price="28"><div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Maple Sweet Potato</div></div></div><div><div class="price">$28</div><div class="qty"><button class="dec">−</button><input data-key="pie-sweetpot" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div></div>
+            <div class="product-row" data-key="pie-apple" data-price="30"><div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Apple Crumble</div></div></div><div><div class="price">$30</div><div class="qty"><button class="dec">−</button><input data-key="pie-apple" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div></div>
+            <div class="product-row" data-key="pie-pecan" data-price="36"><div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Brown Butter Bourbon Pecan</div></div></div><div><div class="price">$36</div><div class="qty"><button class="dec">−</button><input data-key="pie-pecan" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div></div>
+            <div class="product-row" data-key="pie-midnight" data-price="38"><div class="product-left"><div class="thumb">Pie</div><div><div class="prod-title">Midnight Chocolate Pecan</div></div></div><div><div class="price">$38</div><div class="qty"><button class="dec">−</button><input data-key="pie-midnight" class="qty-input" type="number" min="0" value="0"><button class="inc">+</button></div></div></div>
           </div>
         </section>
-
-        <!-- Add-ons -->
-        <section class="section" id="addons">
-          <h2 style="color:var(--deep-plum);font-family:'Cinzel Decorative',serif">Extras & Add-Ons</h2>
-          <div class="card" style="margin-top:10px">
-            <div class="product-row" data-key="extra-side" data-price="10">
-              <div class="product-left"><div class="thumb">Side</div><div><div class="prod-title">Extra Side</div><div class="muted">Mac & cheese, mashed potatoes, green beans, or fiesta corn.</div></div></div>
-              <div><div class="price">$10</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div></div>
-            </div>
-            <div class="product-row" data-key="extra-snack" data-price="35">
-              <div class="product-left"><div class="thumb">Box</div><div><div class="prod-title">Extra Snack Box</div><div class="muted">Same grazing box, extra quantity.</div></div></div>
-              <div><div class="price">$35</div><div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Bundles info -->
-        <section class="section" id="bundles">
-          <h2 style="color:var(--deep-plum);font-family:'Cinzel Decorative',serif">Bundles</h2>
-          <div class="grid-2" style="margin-top:10px">
-            <div class="card">
-              <h3>Ham Christmas Bundle</h3>
-              <div class="muted">Includes: 1 breakfast choice (feeds 6–8), grazing box, ham dinner (feeds 4), and 1 pie. <strong>$120</strong></div>
-              <div style="margin-top:10px"><label>Quantity <div class="qty" style="display:inline-flex"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input" data-key="bundle-ham"><button class="inc">+</button></div></label></div>
-              <div class="small muted" style="margin-top:8px">Bundles are fixed. You may add extras (10% off add-ons).</div>
-            </div>
-            <div class="card">
-              <h3>Gumbo Christmas Bundle</h3>
-              <div class="muted">Includes: 1 breakfast choice (feeds 6–8), grazing box, gumbo dinner (feeds 4), and 1 pie. <strong>$125</strong></div>
-              <div style="margin-top:10px"><label>Quantity <div class="qty" style="display:inline-flex"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input" data-key="bundle-gumbo"><button class="inc">+</button></div></label></div>
-              <div class="small muted" style="margin-top:8px">Bundles are fixed. You may add extras (10% off add-ons).</div>
-            </div>
-          </div>
-        </section>
-
       </main>
 
-      <!-- RIGHT: Summary & Order form -->
+      <!-- RIGHT: summary & order -->
       <aside class="summary">
-        <h4>Your Order</h4>
+        <h4 style="margin:0 0 8px">Your Order</h4>
+        <div id="order-lines" style="max-height:380px;overflow:auto;margin-bottom:10px"><div class="muted">No items yet.</div></div>
+        <div style="display:flex;justify-content:space-between"><div class="muted">Subtotal</div><div id="subtotal">$0.00</div></div>
+        <div style="display:flex;justify-content:space-between"><div class="muted">Discounts</div><div id="discounts">-$0.00</div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:8px;font-weight:800;font-size:18px"><div>Total</div><div id="total">$0.00</div></div>
 
-        <div id="order-lines" style="max-height:380px;overflow:auto;margin-bottom:8px">
-          <div class="small muted">No items yet.</div>
-        </div>
+        <div style="margin-top:12px"><label style="display:block;margin-bottom:6px">Name</label><input id="cust-name" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3"></div>
+        <div style="margin-top:8px"><label style="display:block;margin-bottom:6px">Phone or Email</label><input id="cust-contact" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3"></div>
 
-        <div class="line"><div>Subtotal</div><div id="subtotal">$0.00</div></div>
-        <div class="line"><div>Discounts</div><div id="discounts">-$0.00</div></div>
-        <div class="total"><div>Total</div><div id="total">$0.00</div></div>
-
-        <div class="small" style="margin-top:10px">Payment holds your order. After submitting this order, please send payment to secure your slot.</div>
-
-        <div style="margin-top:10px">
-          <label style="display:block;margin-bottom:6px">Name</label>
-          <input id="cust-name" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3">
-        </div>
-        <div style="margin-top:8px">
-          <label style="display:block;margin-bottom:6px">Phone or Email</label>
-          <input id="cust-contact" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3">
-        </div>
-
-        <div style="margin-top:10px">
-          <label style="display:block;margin-bottom:6px">Payment Method</label>
-          <select id="payment-method" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3">
-            <option value="venmo">Venmo</option>
-            <option value="paypal">PayPal</option>
-            <option value="square">Square (card)</option>
-          </select>
-        </div>
+        <div style="margin-top:10px"><label style="display:block;margin-bottom:6px">Payment Method</label><select id="payment-method" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e8e6e3"><option value="venmo">Venmo</option><option value="paypal">PayPal</option><option value="square">Square (card)</option></select></div>
 
         <div style="margin-top:12px;display:flex;gap:8px">
           <button class="btn" id="submit-order">Submit Order</button>
           <button class="btn secondary" id="reset-order">Reset</button>
         </div>
 
-        <div class="small muted" style="margin-top:12px">
-          After submission you'll receive a confirmation screen with payment instructions. Orders are held only when payment is received.
-        </div>
-
+        <div class="muted" style="margin-top:12px">Payment holds your order. After submitting you'll get payment instructions with Venmo (@krismaths) / PayPal (krismaths5@gmail.com) / Square placeholder.</div>
       </aside>
     </div>
 
-    <footer>
-      <div style="max-width:800px;margin:0 auto;padding-top:18px">
-        <div style="font-weight:700;color:var(--deep-plum)">Cozy Southern Christmas</div>
-        <div style="margin-top:6px">Made with ❤️ in a home kitchen. Allergen info and required labeling provided at pickup.</div>
-      </div>
-    </footer>
-
+    <footer style="margin-top:18px;text-align:center;color:var(--muted)">Cozy Southern Christmas — Made with ❤️ in a home kitchen. Orders confirmed after payment.</footer>
   </div>
 
   <script>
-    /* --------- Data helpers --------- */
-    function n(num){ return Number(num || 0); }
-    function money(v){ return "$" + (Math.round((v+Number.EPSILON)*100)/100).toFixed(2); }
+    /* helpers */
+    const money = v=>"$"+(Math.round((v+Number.EPSILON)*100)/100).toFixed(2);
+    const n = v=>Number(v||0);
 
-    // pricing map pulled from data attributes; we'll compute from DOM
-    function gatherProducts(){
-      const products = [];
-      document.querySelectorAll('[data-key]').forEach(el=>{
-        const key = el.getAttribute('data-key');
-        const baked = el.getAttribute('data-price-baked');
-        const bh = el.getAttribute('data-price-bakehome');
-        const p = el.getAttribute('data-price');
-        // price logic: prefer data-price, else baked/bakehome we handle via radio variant
-        products.push({el,key,priceBase:n(p||0),priceBaked:n(baked||0),priceBakeHome:n(bh||0)});
-      });
-      return products;
-    }
-
-    // read all qty inputs into an object keyed by nearest data-key or product row
+    /* recalc / read quantities */
     function readQuantities(){
       const q = {};
-      // special product rows that have data-key on top-level like product-row or input with data-key
       document.querySelectorAll('.qty-input').forEach(inp=>{
-        const parentRow = inp.closest('[data-key]');
-        if(parentRow){
-          const key = parentRow.getAttribute('data-key');
-          // variant handling for rolls uses separate radio groups; read variant
-          let price = parentRow.getAttribute('data-price') ? n(parentRow.getAttribute('data-price')) : 0;
-          // if baked/bakehome variants present, check the radio selection for that product
-          if(parentRow.getAttribute('data-price-baked')){
-            // determine which radio group; name attribute pattern is product_variant, so find checked radio in that row
-            const radios = parentRow.querySelectorAll('input[type="radio"]');
-            let variant = 'baked';
-            radios.forEach(r=>{ if(r.checked) variant = r.value; });
-            price = (variant === 'baked') ? n(parentRow.getAttribute('data-price-baked')) : n(parentRow.getAttribute('data-price-bakehome'));
-          }
-          // but if input itself has data-price override (deviled eggs etc)
-          if(inp.hasAttribute('data-price')) price = n(inp.getAttribute('data-price'));
-          q[key] = q[key] || {qty:0, price:price, el:parentRow};
-          q[key].qty += Math.max(0, Math.floor(n(inp.value)));
-        } else {
-          // sometimes inputs have data-key themselves (bundle qtys)
-          const keyAttr = inp.getAttribute('data-key');
-          if(keyAttr){
-            q[keyAttr] = {qty: Math.max(0, Math.floor(n(inp.value))), price: n(inp.getAttribute('data-price') || 0), el: inp};
-          }
-        }
+        const key = inp.getAttribute('data-key');
+        if(!key) return;
+        const priceAttr = inp.getAttribute('data-price') || (inp.closest('[data-key]') && inp.closest('[data-key]').getAttribute('data-price')) || 0;
+        const price = n(priceAttr);
+        const qty = Math.max(0, Math.floor(n(inp.value)));
+        q[key] = { qty, price };
       });
       return q;
     }
 
-    /* --------- Quantity control handlers --------- */
-    document.querySelectorAll('.inc').forEach(btn=>{
-      btn.addEventListener('click',e=>{
-        const inp = e.target.closest('.qty').querySelector('.qty-input');
-        inp.value = Math.max(0, Number(inp.value) + 1);
-        recalc();
-      });
-    });
-    document.querySelectorAll('.dec').forEach(btn=>{
-      btn.addEventListener('click',e=>{
-        const inp = e.target.closest('.qty').querySelector('.qty-input');
-        inp.value = Math.max(0, Number(inp.value) - 1);
-        recalc();
-      });
-    });
-    // also respond to manual edits
-    document.querySelectorAll('.qty-input').forEach(inp=>{
-      inp.addEventListener('change',e=>{
-        inp.value = Math.max(0, Math.floor(Number(inp.value) || 0));
-        recalc();
-      });
-    });
-    // radio changes also recalc
-    document.querySelectorAll('input[type="radio"]').forEach(r=>r.addEventListener('change', recalc));
-    // checkboxes for ham sides: ensure max 2 when ham qty>0
-    document.querySelectorAll('.ham-side').forEach(cb=>{
-      cb.addEventListener('change',e=>{
-        const selected = [...document.querySelectorAll('.ham-side:checked')];
-        if(selected.length > 2){
-          // uncheck oldest (prevent)
-          e.target.checked = false;
-          alert("Please choose up to two sides for the ham dinner.");
-        }
-      });
-    });
-
-    /* --------- Pricing rules ---------
-      - Bundles fixed price (bundle-ham $120, bundle-gumbo $125)
-      - Any item added on top of at least one bundle gets 10% off (add-on discount)
-      - If the order has 3 or more qualifying items in pies+breakfast (combined), those qualifying items get 10% off (multi-item discount)
-      - Discounts do not stack. Priority: bundle-addon discount applies to items that are added on top of a purchased bundle. Then, after that, multi-item discount applies to qualifying items only if they aren't already discounted via bundle-addon.
-    ----------------------------------*/
-
-    function recalc(){
-      const quantities = readQuantities();
-      // compute subtotal
-      let subtotal = 0;
-      // track items array for summary
-      const lines = [];
-      // helper to add line
-      function addLine(label, qty, unitPrice, lineTotal, note){
-        lines.push({label,qty,unitPrice,lineTotal,note});
-      }
-
-      // Bundles first:
-      const bundleHamQty = quantities['bundle-ham'] ? quantities['bundle-ham'].qty : 0;
-      const bundleGumboQty = quantities['bundle-gumbo'] ? quantities['bundle-gumbo'].qty : 0;
-      if(bundleHamQty>0){
-        addLine('Ham Christmas Bundle', bundleHamQty, 120, 120*bundleHamQty, 'Bundle (fixed contents)');
-        subtotal += 120 * bundleHamQty;
-      }
-      if(bundleGumboQty>0){
-        addLine('Gumbo Christmas Bundle', bundleGumboQty, 125, 125*bundleGumboQty, 'Bundle (fixed contents)');
-        subtotal += 125 * bundleGumboQty;
-      }
-
-      // Collect standalone products
-      // we iterate over product rows with data-key (excluding bundle keys already read)
-      const qObj = readQuantities();
-
-      // Count how many bundle slots exist (used to determine what counts as "added on top")
-      const bundleCount = bundleHamQty + bundleGumboQty;
-
-      // Determine which items are considered part of bundles — i.e., customers must select breakfast choice and pie
-      // For this simple demo, bundles are fixed and do not consume product qtys. We treat any product qty >0 as an add-on if bundleCount>0.
-      // Next: compute qualifying count for multi-item discount (pies + breakfast)
-      let qualifyingCount = 0;
-      const breakfastKeys = ['classic-rolls','sticky-rolls','french-toast','sausage-bake'];
-      const pieKeys = ['pie-lemon','pie-sweetpot','pie-apple','pie-pecan','pie-midnight'];
-
-      breakfastKeys.forEach(k=> { if(qObj[k] && qObj[k].qty>0) qualifyingCount += qObj[k].qty; });
-      pieKeys.forEach(k=> { if(qObj[k] && qObj[k].qty>0) qualifyingCount += qObj[k].qty; });
-
-      // We'll apply discounts now. Strategy:
-      // - For each non-bundle product: determine base unit price (respect bake variant)
-      // - If bundleCount>0 and this product is present -> this product is an add-onCandidate (eligible for bundle-addon discount)
-      // - We'll mark add-ons as discounted by bundle first.
-      // - After that, if qualifyingCount >=3, apply multi-item discount to remaining qualifying items that were not discounted.
-
-      // Build a list of item objects to evaluate discounts
-      const items = [];
-      document.querySelectorAll('[data-key]').forEach(row=>{
-        const key = row.getAttribute('data-key');
-        // skip bundle rows if present
-        if(key==='bundle-ham' || key==='bundle-gumbo') return;
-        const priceAttr = row.getAttribute('data-price');
-        let unit = priceAttr ? n(priceAttr) : 0;
-        // if baked/bakehome variant exists
-        if(row.getAttribute('data-price-baked')){
-          // find radio selection in row
-          const radios = row.querySelectorAll('input[type="radio"]');
-          let variant = 'baked';
-          radios.forEach(r=>{ if(r.checked) variant = r.value; });
-          unit = (variant==='baked') ? n(row.getAttribute('data-price-baked')) : n(row.getAttribute('data-price-bakehome'));
-        }
-        // find qty from quantities
-        const qty = qObj[key] ? qObj[key].qty : 0;
-        if(qty>0){
-          items.push({key,qty,unit,row});
-        }
-      });
-
-      // Now apply discount rules
-      let discountsTotal = 0;
-      // first: bundle add-on discount (10% off) applies to any item when bundleCount>0
-      if(bundleCount>0){
-        items.forEach(it=>{
-          const base = it.unit * it.qty;
-          const lineDiscount = base * 0.10; // 10% off add-ons
-          // But per rules: premium upgrades (we won't special-case here — all add-ons eligible)
-          // We mark discountedBy = 'bundle' to exclude from multi-item discount
-          it.discountedBy = 'bundle';
-          it.discountAmount = lineDiscount;
-          it.finalLine = base - lineDiscount;
-          discountsTotal += lineDiscount;
-          subtotal += it.finalLine;
-          addLine(formatLabel(it), it.qty, it.unit, it.finalLine, '10% bundle add-on discount');
-        });
-      } else {
-        // no bundles — subtotal includes all items at full price, we'll handle multi-item discount after
-        items.forEach(it=>{
-          const lineTotal = it.unit * it.qty;
-          subtotal += lineTotal;
-          it.finalLine = lineTotal;
-          it.discountedBy = null;
-          it.discountAmount = 0;
-          addLine(formatLabel(it), it.qty, it.unit, lineTotal, '');
-        });
-        // apply multi-item discount if qualifyingCount >=3
-        if(qualifyingCount >= 3){
-          // Determine which items are qualifying (pies + breakfast). We'll apply 10% across those items proportionally.
-          // Calculate total price of qualifying items (only those not yet discounted)
-          let qualifyingItems = items.filter(it => breakfastKeys.includes(it.key) || pieKeys.includes(it.key));
-          let qualifyingTotal = qualifyingItems.reduce((s,it)=> s + it.finalLine,0);
-          if(qualifyingTotal > 0){
-            const multiDisc = qualifyingTotal * 0.10;
-            discountsTotal += multiDisc;
-            // subtract proportionally from each qualifying line in the summary lines
-            qualifyingItems.forEach(it=>{
-              const part = (it.finalLine / qualifyingTotal) * multiDisc;
-              it.finalLine -= part;
-              // adjust lines array to reflect the reduced amount — we will rebuild lines after computing discounts for clarity
-            });
-          }
-          // rebuild lines and subtotal
-          subtotal = 0; lines.length = 0;
-          if(bundleHamQty>0) { addLine('Ham Christmas Bundle', bundleHamQty, 120, 120*bundleHamQty, 'Bundle (fixed contents)'); subtotal += 120*bundleHamQty; }
-          if(bundleGumboQty>0) { addLine('Gumbo Christmas Bundle', bundleGumboQty, 125, 125*bundleGumboQty, 'Bundle (fixed contents)'); subtotal += 125*bundleGumboQty; }
-          items.forEach(it=>{
-            addLine(formatLabel(it), it.qty, it.unit, it.finalLine, it.discountedBy ? 'discounted' : '');
-            subtotal += it.finalLine;
-          });
-        }
-      }
-
-      // If bundleCount>0 case we already added items lines there. But we may have double-added if we didn't handle carefully.
-      // For simplicity, if bundleCount>0 we've already added items. However we must ensure we didn't omit non-discounted items (we included all).
-      // discountsTotal variable reflects only direct discount sums in our calculations
-      // For display: compute a new line summary formatted
-      renderSummary(lines, subtotal, discountsTotal);
-    }
-
-    function formatLabel(it){
-      // friendly label mapping
-      const map = {
+    function labelForKey(k){
+      return {
         'classic-rolls':'Classic Cinnamon Roll Tin',
         'sticky-rolls':'Caramel Pecan Sticky Rolls',
         'french-toast':'French Toast Casserole',
-        'sausage-bake':'Sausage, Egg & Hashbrown Bake',
-        'fruit-tray':'Fresh Fruit Tray',
         'grazing-box':'Southern Grazing Box',
         'ham':'Brown Sugar Glazed Ham Dinner',
         'gumbo':'Signature Holiday Gumbo Dinner',
+        'deviled-hf':'Deviled Eggs (1/2 doz)',
+        'deviled-doz':'Deviled Eggs (dozen)',
+        'side-mac':'Mac & Cheese',
+        'side-mashed':'Mashed Potatoes',
+        'side-greenbeans':'Green Bean Casserole',
+        'side-corn':'Sweet Cream Fiesta Corn',
         'pie-lemon':'Lemon Buttermilk Pie',
         'pie-sweetpot':'Maple Sweet Potato Pie',
         'pie-apple':'Apple Crumble Pie',
         'pie-pecan':'Brown Butter Bourbon Pecan Pie',
         'pie-midnight':'Midnight Chocolate Pecan Pie',
-        'extra-side':'Extra Side',
-        'extra-snack':'Extra Snack Box',
-        'deviled-hf':'Deviled Eggs (1/2 doz)',
-        'deviled-doz':'Deviled Eggs (doz)'
-      };
-      return map[it.key] || it.key;
+        'bundle-ham':'Ham Christmas Bundle',
+        'bundle-gumbo':'Gumbo Christmas Bundle'
+      }[k] || k;
+    }
+
+    function recalc(){
+      const q = readQuantities();
+      const lines = [];
+      let subtotal = 0;
+      let discounts = 0;
+
+      // Bundles: bundle-ham and bundle-gumbo are data-keys on inputs
+      if(q['bundle-ham'] && q['bundle-ham'].qty>0){
+        const qty = q['bundle-ham'].qty;
+        const unit = q['bundle-ham'].price || 120;
+        lines.push({label:labelForKey('bundle-ham'), qty, unit, total: unit*qty, note:'Bundle (fixed)'});
+        subtotal += unit*qty;
+      }
+      if(q['bundle-gumbo'] && q['bundle-gumbo'].qty>0){
+        const qty = q['bundle-gumbo'].qty;
+        const unit = q['bundle-gumbo'].price || 125;
+        lines.push({label:labelForKey('bundle-gumbo'), qty, unit, total: unit*qty, note:'Bundle (fixed)'});
+        subtotal += unit*qty;
+      }
+
+      // non-bundle items
+      document.querySelectorAll('.product-row[data-key]').forEach(row=>{
+        const key = row.getAttribute('data-key');
+        if(key==='bundle-ham' || key==='bundle-gumbo') return; // not used here
+        const inp = document.querySelector('.qty-input[data-key="'+key+'"]');
+        const qty = inp ? Math.max(0, Math.floor(n(inp.value))) : 0;
+        const unit = n(row.getAttribute('data-price')|| (inp?inp.getAttribute('data-price'):0) || 0);
+        if(qty>0){
+          lines.push({label:labelForKey(key), qty, unit, total: unit*qty, note:''});
+          subtotal += unit*qty;
+        }
+      });
+
+      // NOTE: Add-on discount logic: if any bundles present, all standalone items are treated as add-ons at 10% off
+      const bundleCount = (q['bundle-ham']?q['bundle-ham'].qty:0) + (q['bundle-gumbo']?q['bundle-gumbo'].qty:0);
+      if(bundleCount>0){
+        // adjust lines that are not bundles
+        lines.forEach(l=>{
+          if(l.label !== labelForKey('bundle-ham') && l.label !== labelForKey('bundle-gumbo')){
+            const base = l.total;
+            const disc = base*0.10;
+            l.total = base - disc;
+            discounts += disc;
+          }
+        });
+        subtotal = lines.reduce((s,l)=> s + l.total, 0);
+      } else {
+        // no bundles: leave as-is (multi-item pie+breakfast discount omitted for simplicity)
+      }
+
+      renderSummary(lines, subtotal, discounts);
     }
 
     function renderSummary(lines, subtotal, discounts){
       const container = document.getElementById('order-lines');
       container.innerHTML = '';
-      if(lines.length === 0){
-        container.innerHTML = '<div class="small muted">No items yet.</div>';
-      } else {
+      if(lines.length===0) container.innerHTML = '<div class="muted">No items yet.</div>';
+      else {
         lines.forEach(l=>{
           const row = document.createElement('div');
-          row.style.display='flex'; row.style.justifyContent='space-between'; row.style.marginBottom='6px';
-          const left = document.createElement('div'); left.innerText = (l.qty>1? `${l.qty} × ` : '') + l.label;
+          row.style.display='flex';row.style.justifyContent='space-between';row.style.marginBottom='6px';
+          const left = document.createElement('div'); left.innerText = (l.qty>1? l.qty + ' × ' :'') + l.label;
           left.style.fontSize='14px';
-          const right = document.createElement('div'); right.style.fontWeight='600';
-          right.innerText = money(l.lineTotal);
-          row.appendChild(left); row.appendChild(right);
-          container.appendChild(row);
-          if(l.note){
-            const note = document.createElement('div'); note.className='muted'; note.style.fontSize='12px'; note.style.marginBottom='8px'; note.innerText = l.note;
-            container.appendChild(note);
-          }
+          const right = document.createElement('div'); right.style.fontWeight='700'; right.innerText = money(l.total);
+          row.appendChild(left); row.appendChild(right); container.appendChild(row);
+          if(l.note){ const note = document.createElement('div'); note.className='muted'; note.style.fontSize='12px'; note.style.marginBottom='8px'; note.innerText = l.note; container.appendChild(note); }
         });
       }
       document.getElementById('subtotal').innerText = money(subtotal);
       document.getElementById('discounts').innerText = "-" + money(discounts);
-      const total = Math.max(0, subtotal); // discounts already applied inside subtotal in our approach
-      document.getElementById('total').innerText = money(total);
+      document.getElementById('total').innerText = money(Math.max(0, subtotal));
     }
+
+    /* quantity controls - generic */
+    function incDecSetup(){
+      document.querySelectorAll('.inc').forEach(b=>b.addEventListener('click', e=>{
+        const inp = e.target.closest('.qty').querySelector('.qty-input'); if(!inp) return; inp.value = Math.max(0, n(inp.value)+1); recalc();
+      }));
+      document.querySelectorAll('.dec').forEach(b=>b.addEventListener('click', e=>{
+        const inp = e.target.closest('.qty').querySelector('.qty-input'); if(!inp) return; inp.value = Math.max(0, n(inp.value)-1); recalc();
+      }));
+      document.querySelectorAll('.qty-input').forEach(i=>i.addEventListener('change', e=>{ i.value = Math.max(0, Math.floor(n(i.value)||0)); recalc(); }));
+    }
+    incDecSetup();
+
+    // bundle radio interactions and qty sync
+    document.querySelectorAll('input[name="bundle"]').forEach(r=>{
+      r.addEventListener('change', e=>{
+        const val = e.target.value;
+        // visually: when user picks ham/gumbo set the corresponding qty input to 1 if it was 0 and zero the other
+        const hamInput = document.getElementById('bundle-ham-qty');
+        const gumboInput = document.getElementById('bundle-gumbo-qty');
+        if(val === 'ham'){
+          if(n(hamInput.value) === 0) hamInput.value = 1;
+          gumboInput.value = 0;
+          // make gumbo hidden input remain present but zeroed
+        } else if(val === 'gumbo'){
+          if(n(gumboInput.value) === 0) gumboInput.value = 1;
+          hamInput.value = 0;
+        } else { // none
+          hamInput.value = 0; gumboInput.value = 0;
+        }
+        recalc();
+      });
+    });
+
+    // bundle qty +/- buttons control both visible ham qty input and hidden gumbo depending on selection
+    document.querySelectorAll('[data-bundle-qty]').forEach(b=>b.addEventListener('click', e=>{
+      // decide which bundle is selected
+      const selected = document.querySelector('input[name="bundle"]:checked').value;
+      const hamInput = document.getElementById('bundle-ham-qty');
+      const gumboInput = document.getElementById('bundle-gumbo-qty');
+      const inp = (selected==='ham') ? hamInput : (selected==='gumbo') ? gumboInput : null;
+      if(!inp) return;
+      if(e.target.classList.contains('inc') || e.target.getAttribute('data-bundle-qty') !== null && e.target.innerText === '+'){
+        // not reached; fallback
+      }
+      // decide inc/dec using text content
+      const txt = e.target.textContent.trim();
+      if(txt === '+' || txt === '＋' || txt === '+') { inp.value = Math.max(0, n(inp.value)+1); }
+      else if(txt === '-' || txt === '−') { inp.value = Math.max(0, n(inp.value)-1); }
+      else {
+        // for buttons that don't have text, attempt to use class inc/dec
+        if(e.target.classList.contains('inc')) inp.value = Math.max(0, n(inp.value)+1);
+        if(e.target.classList.contains('dec')) inp.value = Math.max(0, n(inp.value)-1);
+      }
+      recalc();
+    }));
+
+    // simpler: add dedicated small handlers for the three visible bundle qty controls (we made two small buttons around ham qty input)
+    // (Also allow manual edit)
+    document.getElementById('bundle-ham-qty').addEventListener('change', ()=>{ // ensure gumbo zero if ham >0 and radio set
+      if(n(document.getElementById('bundle-ham-qty').value)>0) document.querySelector('input[name="bundle"][value="ham"]').checked = true;
+      recalc();
+    });
+    document.getElementById('bundle-gumbo-qty').addEventListener('change', ()=>{ if(n(document.getElementById('bundle-gumbo-qty').value)>0) document.querySelector('input[name="bundle"][value="gumbo"]').checked = true; recalc(); });
+
+    // Reset
+    document.getElementById('reset-order').addEventListener('click',()=>{
+      document.querySelectorAll('.qty-input').forEach(i=>i.value = 0);
+      document.querySelectorAll('select').forEach(s=>s.selectedIndex=0);
+      document.querySelector('input[name="bundle"][value="none"]').checked = true;
+      document.getElementById('bundle-ham-qty').value = 0;
+      document.getElementById('bundle-gumbo-qty').value = 0;
+      recalc();
+    });
 
     // initial calc
     recalc();
 
-    // Jump to order handler
-    document.getElementById('jump-order').addEventListener('click', ()=> {
-      window.scrollTo({top:document.getElementById('bundles').offsetTop - 20, behavior:'smooth'});
-    });
+    // jump
+    document.getElementById('jump-order').addEventListener('click', ()=>{ window.scrollTo({top:document.getElementById('menu').offsetTop-20, behavior:'smooth'}); });
 
-    // Reset order
-    document.getElementById('reset-order').addEventListener('click', ()=>{
-      document.querySelectorAll('.qty-input').forEach(i=> i.value = 0);
-      document.querySelectorAll('input[type="checkbox"]').forEach(cb=> cb.checked=false);
-      recalc();
-    });
-
-    // Submit order (creates JSON and shows payment instructions)
+    // SUBMIT: validate bundle selections, ham-side rules, then show order preview with payment info
     document.getElementById('submit-order').addEventListener('click', ()=>{
       const name = document.getElementById('cust-name').value.trim();
       const contact = document.getElementById('cust-contact').value.trim();
-      if(!name || !contact){
-        alert('Please enter your name and a phone or email so we can confirm your order.');
-        return;
-      }
-      // gather order lines currently visible
-      // for the demo: we'll create a JSON of the order and show a confirmation modal (simple)
-      const orderLinesHtml = document.getElementById('order-lines').innerHTML;
-      if(orderLinesHtml.includes('No items yet')){
-        alert('Please add at least one item or a bundle before submitting.');
-        return;
-      }
+      if(!name || !contact){ alert('Please enter your name and a phone or email.'); return; }
 
-      // Build a simple order object (for real use: post to your server or zapier/google sheet)
       const q = readQuantities();
-      const order = {
-        name, contact,
-        paymentMethod: document.getElementById('payment-method').value,
-        items: q,
-        bundles: {
-          ham: q['bundle-ham'] ? q['bundle-ham'].qty : 0,
-          gumbo: q['bundle-gumbo'] ? q['bundle-gumbo'].qty : 0
-        },
-        subtotal: document.getElementById('subtotal').innerText,
-        total: document.getElementById('total').innerText,
-        note: ''
+      // require at least one item or a bundle
+      const hasAny = Object.values(q).some(v=>v.qty>0);
+      if(!hasAny){ alert('Please add at least one item or pick a bundle before submitting.'); return; }
+
+      // If bundle-ham qty > 0 ensure bundle-ham-breakfast and bundle-ham-pie selected
+      const hamBundleQty = q['bundle-ham'] ? q['bundle-ham'].qty : 0;
+      const gumboBundleQty = q['bundle-gumbo'] ? q['bundle-gumbo'].qty : 0;
+      if(hamBundleQty > 0){
+        const bf = document.getElementById('bundle-ham-breakfast').value;
+        const pie = document.getElementById('bundle-ham-pie').value;
+        if(!bf || !pie){ alert('You selected Ham bundle(s). Please choose a breakfast and a pie for the Ham bundle.'); return; }
+      }
+      if(gumboBundleQty > 0){
+        const bf = document.getElementById('bundle-gumbo-breakfast').value;
+        const pie = document.getElementById('bundle-gumbo-pie').value;
+        if(!bf || !pie){ alert('You selected Gumbo bundle(s). Please choose a breakfast and a pie for the Gumbo bundle.'); return; }
+      }
+
+      // ham-side validation: 2 sides per ham dinner
+      const hamQty = q['ham'] ? q['ham'].qty : 0;
+      if(hamQty > 0){
+        const sides = ['side-mac','side-mashed','side-greenbeans','side-corn'];
+        let totalSides = 0;
+        sides.forEach(k=>{ if(q[k]) totalSides += q[k].qty; });
+        const required = hamQty * 2;
+        if(totalSides < required){ alert(`You ordered ${hamQty} ham dinner(s). Please add at least ${required} side portion(s).`); return; }
+      }
+
+      // Build order object
+      const selections = {
+        bundleHamBreakfast: document.getElementById('bundle-ham-breakfast').value,
+        bundleHamPie: document.getElementById('bundle-ham-pie').value,
+        bundleGumboBreakfast: document.getElementById('bundle-gumbo-breakfast').value,
+        bundleGumboPie: document.getElementById('bundle-gumbo-pie').value
       };
-// --- Start: Ham-side validation ---
-const hamQty = q['ham'] ? q['ham'].qty : 0;
+      const order = { name, contact, paymentMethod: document.getElementById('payment-method').value, items: q, selections, subtotal: document.getElementById('subtotal').innerText, total: document.getElementById('total').innerText };
 
-if (hamQty > 0) {
-  let totalSideQty = 0;
-
-  Object.keys(q).forEach(k => {
-    if (k.startsWith('side-')) totalSideQty += (q[k].qty || 0);
-  });
-
-  const requiredSides = hamQty * 2;
-
-  if (totalSideQty < requiredSides) {
-    alert(`You ordered ${hamQty} ham dinner(s). Please add at least ${requiredSides} total side portion(s).`);
-    return;
-  }
-}
-// --- End: Ham-side validation ---
-
-      // Present a confirm dialog with payment instructions
-      const paymentMethod = order.paymentMethod;
-      // Replace handles with your actual handles
+      // Payment text
       const VENMO_HANDLE = '@krismaths';
       const PAYPAL_LINK = 'mailto:krismaths5@gmail.com';
       const SQUARE_LINK = '(Square link will be sent after order submission)';
 
-      let paymentHtml = '<div style="padding:12px">Thank you — your order request has been created. Please send payment to confirm your order:<ul>';
-      if(paymentMethod === 'venmo'){
-        paymentHtml += `<li>Venmo: <strong>${VENMO_HANDLE}</strong></li>`;
-      } else if(paymentMethod === 'paypal'){
-        paymentHtml += `<li>PayPal (Friends & Family preferred): ${PAYPAL_LINK}</li>`;
-      } else {
-        paymentHtml += `<li>Card payment via Square: ${SQUARE_LINK}</li>`;
-      }
-      paymentHtml += '</ul><p style="margin-top:6px">Once we receive payment we will confirm your pickup details. Orders close Dec 19.</p></div>';
+      let paymentHtml = '<div style="padding:12px">Please send payment to confirm your order:<ul>';
+      if(order.paymentMethod === 'venmo') paymentHtml += `<li>Venmo: <strong>${VENMO_HANDLE}</strong></li>`;
+      else if(order.paymentMethod === 'paypal') paymentHtml += `<li>PayPal (Friends & Family preferred): ${PAYPAL_LINK}</li>`;
+      else paymentHtml += `<li>Card via Square: ${SQUARE_LINK}</li>`;
+      paymentHtml += '</ul><p style="margin-top:6px">Orders confirmed once payment is received. Pickup Dec 24, 12–5pm (S. Wall Ave area).</p></div>';
 
-      // For now show a confirm with order JSON and payment instructions
-      const win = window.open('', '_blank', 'noopener');
-      win.document.write('<html><head><title>Order Confirmation</title></head><body style="font-family:Raleway,Arial;padding:18px">');
+      // Open preview window
+      const win = window.open('','_blank','noopener');
+      win.document.write('<html><head><title>Order Preview</title></head><body style="font-family:Raleway,Arial;padding:18px">');
       win.document.write('<h2 style="color:#4B3F4E">Order Preview</h2>');
       win.document.write('<pre>' + JSON.stringify(order, null, 2) + '</pre>');
       win.document.write(paymentHtml);
-      win.document.write('<p style="color:#666;font-size:13px">Note: this is an order request. Your order is confirmed only after we receive payment.</p>');
+      win.document.write('<p style="color:#666;font-size:13px">This is an order request. Your order is only confirmed after payment.</p>');
       win.document.write('</body></html>');
       win.document.close();
-
-      // Also console.log it (for dev)
-      console.log('ORDER SUBMITTED', order);
 
       alert('Order request created — a new window has your order summary and payment instructions. Please complete payment to hold your slot.');
     });
 
-    // Recalc when things change (qty handlers already call). Also on any manual change
+    // Recalc whenever things change
     document.body.addEventListener('change', (e)=> recalc());
+    // Also recalc on clicks of quantity +/- that are not standard inc/dec
+    document.querySelectorAll('[data-bundle-qty]').forEach(b=>b.addEventListener('click', ()=> recalc()));
   </script>
 </body>
 </html>
