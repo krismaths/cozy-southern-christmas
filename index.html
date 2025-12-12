@@ -296,16 +296,68 @@
                 </div>
               </div>
 
-              <div style="margin-top:10px">
-                <div class="muted">Choose two sides (ham orders only):</div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-                  <label><input type="checkbox" class="ham-side" value="Mac & Cheese"> Mac & Cheese</label>
-                  <label><input type="checkbox" class="ham-side" value="Mashed Potatoes"> Mashed Potatoes</label>
-                  <label><input type="checkbox" class="ham-side" value="Green Bean Casserole"> Green Bean Casserole</label>
-                  <label><input type="checkbox" class="ham-side" value="Sweet Cream Fiesta Corn"> Sweet Cream Fiesta Corn</label>
-                </div>
-              </div>
-            </div>
+<div style="margin-top:10px">
+  <div class="muted">Choose two sides per ham dinner (each side = $10). Add quantities below.</div>
+
+  <!-- Side product rows (each is a normal product row integrated with the form) -->
+  <div class="product-row" data-key="side-mac" data-price="10" style="margin-top:8px">
+    <div class="product-left">
+      <div class="thumb">Side</div>
+      <div>
+        <div class="prod-title">Mac & Cheese</div>
+        <div class="muted">Creamy baked mac & cheese. $10 / pan</div>
+      </div>
+    </div>
+    <div>
+      <div class="price">$10</div>
+      <div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div>
+    </div>
+  </div>
+
+  <div class="product-row" data-key="side-mashed" data-price="10" style="margin-top:8px">
+    <div class="product-left">
+      <div class="thumb">Side</div>
+      <div>
+        <div class="prod-title">Mashed Potatoes</div>
+        <div class="muted">Buttery whipped potatoes. $10 / pan</div>
+      </div>
+    </div>
+    <div>
+      <div class="price">$10</div>
+      <div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div>
+    </div>
+  </div>
+
+  <div class="product-row" data-key="side-greenbeans" data-price="10" style="margin-top:8px">
+    <div class="product-left">
+      <div class="thumb">Side</div>
+      <div>
+        <div class="prod-title">Green Bean Casserole</div>
+        <div class="muted">Classic green bean casserole. $10 / pan</div>
+      </div>
+    </div>
+    <div>
+      <div class="price">$10</div>
+      <div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div>
+    </div>
+  </div>
+
+  <div class="product-row" data-key="side-corn" data-price="10" style="margin-top:8px">
+    <div class="product-left">
+      <div class="thumb">Side</div>
+      <div>
+        <div class="prod-title">Sweet Cream Fiesta Corn</div>
+        <div class="muted">Creamy fiesta-style corn. $10 / pan</div>
+      </div>
+    </div>
+    <div>
+      <div class="price">$10</div>
+      <div style="margin-top:8px" class="qty"><button class="dec">−</button><input type="number" min="0" value="0" class="qty-input"><button class="inc">+</button></div>
+    </div>
+  </div>
+
+</div>
+
 
             <!-- Gumbo -->
             <div class="card">
@@ -782,6 +834,24 @@
         total: document.getElementById('total').innerText,
         note: ''
       };
+// --- Start: Ham-side validation ---
+const hamQty = q['ham'] ? q['ham'].qty : 0;
+
+if (hamQty > 0) {
+  let totalSideQty = 0;
+
+  Object.keys(q).forEach(k => {
+    if (k.startsWith('side-')) totalSideQty += (q[k].qty || 0);
+  });
+
+  const requiredSides = hamQty * 2;
+
+  if (totalSideQty < requiredSides) {
+    alert(`You ordered ${hamQty} ham dinner(s). Please add at least ${requiredSides} total side portion(s).`);
+    return;
+  }
+}
+// --- End: Ham-side validation ---
 
       // Present a confirm dialog with payment instructions
       const paymentMethod = order.paymentMethod;
